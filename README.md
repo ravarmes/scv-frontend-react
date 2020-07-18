@@ -31,6 +31,7 @@
 
 ## :computer: Instalação e execução <a name="-instalacao"/></a>
 
+0. Instale o gerenciador de dependências [Node](https://nodejs.org/en/download/);
 1. Faça um clone desse repositório;
 2. Entre na pasta rodando `cd scv-frontend-react`;
 3. Rode `npm i` para instalar as dependências;
