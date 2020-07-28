@@ -8,9 +8,9 @@ const headerProps = {
     subtitle: 'Cadastro de ufs: Incluir, Listar, Alterar e Excluir!'
 }
 
-//const baseUrl = 'http://localhost:8080/ufs'
+const baseUrl = 'http://localhost:8080/ufs'
 
-const baseUrl = 'https://scv-backend-spring-postgres.herokuapp.com/ufs'
+//const baseUrl = 'https://scv-backend-spring.herokuapp.com/ufs'
 
 const initialState = {
     uf: { sigla: '', nome: '' },
