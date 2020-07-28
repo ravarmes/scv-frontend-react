@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://github.com/ravarmes/scv-frontend-react",
+  "homepage": "https://github.com/ravarmes/scv-frontend-react",
   "dependencies": {
     "axios": "0.18.0",
     "bootstrap": "4.1.1",
