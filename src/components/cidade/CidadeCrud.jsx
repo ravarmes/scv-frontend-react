@@ -8,11 +8,11 @@ const headerProps = {
     subtitle: 'Cadastro de cidades: Incluir, Listar, Alterar e Excluir!'
 }
 
-const baseUrl = 'http://localhost:8080/cidades'
-const baseUrlUfs = 'http://localhost:8080/ufs'
+//const baseUrl = 'http://localhost:8080/cidades'
+//const baseUrlUfs = 'http://localhost:8080/ufs'
 
-//const baseUrl = 'https://scv-backend-spring-postgres.herokuapp.com/cidades'
-//const baseUrlUfs = 'https://scv-backend-spring-postgres.herokuapp.com/ufs'
+const baseUrl = 'https://scv-backend-spring-postgres.herokuapp.com/cidades'
+const baseUrlUfs = 'https://scv-backend-spring-postgres.herokuapp.com/ufs'
 
 const initialState = {
     cidade: { nome: '', uf: { id: 0, sigla: '', nome: '' } },
