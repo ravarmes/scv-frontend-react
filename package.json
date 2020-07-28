@@ -5,7 +5,7 @@
   "homepage": "https://ravarmes.github.io/scv-frontend-react/",
   "dependencies": {
     "axios": "0.18.0",
-    "bootstrap": "4.1.1",
+    "bootstrap": "4.3.1",
     "font-awesome": "4.7.0",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
