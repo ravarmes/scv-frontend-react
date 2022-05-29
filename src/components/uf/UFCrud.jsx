@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import consts from '../../consts'
 import axios from 'axios'
 import Main from '../template/Main'
+import { toast } from 'react-toastify'
+
 
 const headerProps = {
     icon: 'map',
@@ -8,9 +11,7 @@ const headerProps = {
     subtitle: 'Cadastro de ufs: Incluir, Listar, Alterar e Excluir!'
 }
 
-const baseUrl = 'http://localhost:8080/ufs'
-
-//const baseUrl = 'https://scv-backend-spring.herokuapp.com/ufs'
+const baseUrl = `${consts.API_URL}/ufs`
 
 const initialState = {
     uf: { sigla: '', nome: '' },
@@ -27,31 +28,46 @@ export default class UFCrud extends Component {
         })
     }
 
-    clear() {
-        this.setState({ uf: initialState.uf })
-    }
-
-    save() {
-        const uf = this.state.uf
-        const method = uf.id ? 'put' : 'post'
-        const url = uf.id ? `${baseUrl}/${uf.id}` : baseUrl
-        axios[method](url, uf)
-            .then(resp => {
-                const list = this.getUpdatedList(resp.data)
-                this.setState({ uf: initialState.uf, list })
-            })
-    }
-
-    getUpdatedList(uf, add = true) {
-        const list = this.state.list.filter(u => u.id !== uf.id)
-        if (add) list.unshift(uf)
-        return list
+    findAllUFs(){
+        axios(baseUrl).then(resp => {
+            this.setState({ list: resp.data })
+        })
     }
 
     updateField(event) {
         const uf = { ...this.state.uf }
         uf[event.target.name] = event.target.value
         this.setState({ uf })
+    }
+
+    handleButtonSalvar() {
+        const uf = this.state.uf
+        const method = uf.id ? 'put' : 'post'
+        const url = uf.id ? `${baseUrl}/${uf.id}` : baseUrl
+        axios[method](url, uf)
+            .then(resp => {
+                this.findAllUFs();
+                this.setState({ uf: initialState.uf})
+                toast.success('UF cadastrada/alterada com sucesso!')
+            }).catch(error => {
+                const stringError = error.response.data;
+                alert(stringError['message'])
+                toast.error(stringError['message'])
+            })
+    }
+
+    handleButtonCancelar() {
+        this.setState({ uf: initialState.uf })
+    }
+
+    handleButtonAlterar(uf) {
+        this.setState({ uf })
+    }
+
+    handleButtonRemover(uf) {
+        axios.delete(`${baseUrl}/${uf.id}`).then(resp => {
+            this.findAllUFs();
+        })
     }
 
     renderForm() {
@@ -85,29 +101,18 @@ export default class UFCrud extends Component {
                 <div className="row">
                     <div className="col-12 d-flex justify-content-end">
                         <button className="btn btn-primary"
-                            onClick={e => this.save(e)}>
+                            onClick={e => this.handleButtonSalvar(e)}>
                             Salvar
                         </button>
 
                         <button className="btn btn-secondary ml-2"
-                            onClick={e => this.clear(e)}>
+                            onClick={e => this.handleButtonCancelar(e)}>
                             Cancelar
                         </button>
                     </div>
                 </div>
             </div>
         )
-    }
-
-    load(uf) {
-        this.setState({ uf })
-    }
-
-    remove(uf) {
-        axios.delete(`${baseUrl}/${uf.id}`).then(resp => {
-            const list = this.getUpdatedList(uf, false)
-            this.setState({ list })
-        })
     }
 
     renderTable() {
@@ -137,11 +142,11 @@ export default class UFCrud extends Component {
                     <td>{uf.nome}</td>
                     <td>
                         <button className="btn btn-warning"
-                            onClick={() => this.load(uf)}>
+                            onClick={() => this.handleButtonAlterar(uf)}>
                             <i className="fa fa-pencil"></i>
                         </button>
                         <button className="btn btn-danger ml-2"
-                            onClick={() => this.remove(uf)}>
+                            onClick={() => this.handleButtonRemover(uf)}>
                             <i className="fa fa-trash"></i>
                         </button>
                     </td>

@@ -17,5 +17,8 @@ export default props =>
             <Link to="/bairros">
                 <i className="fa fa-map"></i> Bairros
             </Link>
+            <Link to="/filmes">
+                <i className="fa fa-video-camera"></i> Filmes
+            </Link>
         </nav>
     </aside>
