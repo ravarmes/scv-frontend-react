@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import consts from '../../consts'
 import axios from 'axios'
 import Main from '../template/Main'
+import { toast } from 'react-toastify'
 
 const headerProps = {
     icon: 'map',
@@ -8,11 +10,9 @@ const headerProps = {
     subtitle: 'Cadastro de bairros: Incluir, Listar, Alterar e Excluir!'
 }
 
-const baseUrl = 'http://localhost:8080/bairros'
-const baseUrlUfs = 'http://localhost:8080/ufs'
-
-//const baseUrl = 'https://scv-backend-spring.herokuapp.com/bairros'
-//const baseUrlUfs = 'https://scv-backend-spring.herokuapp.com/ufs'
+const baseUrlBairros = `${consts.API_URL}/bairros`
+const baseUrlUfs = `${consts.API_URL}/ufs`
+const baseUrlCidades = `${consts.API_URL}/cidades`
 
 
 const initialState = {
@@ -27,7 +27,7 @@ export default class CidadeCrud extends Component {
     state = { ...initialState }
 
     componentWillMount() {
-        axios(baseUrl).then(resp => {
+        axios(baseUrlBairros).then(resp => {
             this.setState({ list_bairros: resp.data })
         })
         axios(baseUrlUfs).then(resp => {
@@ -35,38 +35,47 @@ export default class CidadeCrud extends Component {
         })
     }
 
-    load(bairro) {
-        this.setState({ bairro });
-        this.loadCidadesByUf(bairro.cidade.uf);
+    findAllBairros(){
+        axios(baseUrlBairros).then(resp => {
+            this.setState({ list_bairros: resp.data })
+        })
     }
 
-    loadCidadesByUf(uf) {
-        axios(`${baseUrlUfs}/${uf.id}/cidades`).then(resp => {
+    findCidadesByUf(uf) {
+        axios(`${baseUrlCidades}/findByUf/${uf.id}`).then(resp => {
             this.setState({ list_cidades: resp.data });
         })
     }
 
+    handleButtonSalvar() {
+        const bairro = this.state.bairro
+        const method = bairro.id ? 'put' : 'post'
+        const url = bairro.id ? `${baseUrlBairros}/${bairro.id}` : baseUrlBairros
+        axios[method](url, bairro)
+            .then(resp => {
+                this.findAllBairros();
+                this.setState({ bairro: initialState.bairro })
+                toast.success('Bairro cadastrado/alterado com sucesso!')
+            }).catch(error => {
+                const stringError = error.response.data;
+                toast.error(stringError['message'])
+            })
+    }
 
-    clear() {
+    handleButtonCancelar() {
         this.setState({ bairro: initialState.bairro });
         this.setState({ list_cidades: initialState.list_cidades });
     }
 
-    save() {
-        const bairro = this.state.bairro
-        const method = bairro.id ? 'put' : 'post'
-        const url = bairro.id ? `${baseUrl}/${bairro.id}` : baseUrl
-        axios[method](url, bairro)
-            .then(resp => {
-                const list_bairros = this.getUpdatedList(resp.data)
-                this.setState({ bairro: initialState.bairro, list_bairros })
-            })
+    handleButtonAlterar(bairro) {
+        this.setState({ bairro });
+        this.findCidadesByUf(bairro.cidade.uf);
     }
 
-    getUpdatedList(bairro, add = true) {
-        const list_bairros = this.state.list_bairros.filter(b => b.id !== bairro.id)
-        if (add) list_bairros.unshift(bairro)
-        return list_bairros
+    handleButtonRemover(bairro) {
+        axios.delete(`${baseUrlBairros}/${bairro.id}`).then(resp => {
+            this.findAllBairros()
+        })
     }
 
     updateField(event) {
@@ -75,14 +84,14 @@ export default class CidadeCrud extends Component {
         this.setState({ bairro })
     }
 
-    updateSelectUf(event) {
+    handleSelectUfs(event) {
         var select = document.getElementById('select_ufs');
         const uf = this.state.list_ufs[select.selectedIndex];
         this.setStateUF(uf);
-        this.loadCidadesByUf(uf);
+        this.findCidadesByUf(uf);
     }
 
-    updateSelectCidade(event) {
+    handleSelectCidades(event) {
         var select = document.getElementById('select_cidades');
         const cidade = this.state.list_cidades[select.selectedIndex];
         this.setStateCidade(cidade);
@@ -127,7 +136,7 @@ export default class CidadeCrud extends Component {
                                 id="select_ufs"
                                 name="uf"
                                 value={this.state.bairro.cidade.uf.id}
-                                onChange={e => this.updateSelectUf(e)}
+                                onChange={e => this.handleSelectUfs(e)}
                                 placeholder="Escolha a UF...">
                                 {this.renderOptionsUfs()}
                             </select>
@@ -140,7 +149,7 @@ export default class CidadeCrud extends Component {
                                 id="select_cidades"
                                 name="cidade"
                                 value={this.state.bairro.cidade.id}
-                                onChange={e => this.updateSelectCidade(e)}
+                                onChange={e => this.handleSelectCidades(e)}
                                 placeholder="Escolha a Cidade...">
                                 {this.renderOptionsCidades()}
                             </select>
@@ -152,25 +161,18 @@ export default class CidadeCrud extends Component {
                 <div className="row">
                     <div className="col-12 d-flex justify-content-end">
                         <button className="btn btn-primary"
-                            onClick={e => this.save(e)}>
+                            onClick={e => this.handleButtonSalvar(e)}>
                             Salvar
                         </button>
 
                         <button className="btn btn-secondary ml-2"
-                            onClick={e => this.clear(e)}>
+                            onClick={e => this.handleButtonCancelar(e)}>
                             Cancelar
                         </button>
                     </div>
                 </div>
             </div>
         )
-    }
-
-    delete(bairro) {
-        axios.delete(`${baseUrl}/${bairro.id}`).then(resp => {
-            const list_bairros = this.getUpdatedList(bairro, false)
-            this.setState({ list_bairros })
-        })
     }
 
     renderTable() {
@@ -202,11 +204,11 @@ export default class CidadeCrud extends Component {
                     <td>{bairro.cidade.uf.nome}</td>
                     <td>
                         <button className="btn btn-warning"
-                            onClick={() => this.load(bairro)}>
+                            onClick={() => this.handleButtonAlterar(bairro)}>
                             <i className="fa fa-pencil"></i>
                         </button>
                         <button className="btn btn-danger ml-2"
-                            onClick={() => this.delete(bairro)}>
+                            onClick={() => this.handleButtonRemover(bairro)}>
                             <i className="fa fa-trash"></i>
                         </button>
                     </td>
