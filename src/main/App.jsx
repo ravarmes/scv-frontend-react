@@ -9,7 +9,7 @@ import Nav from '../components/template/Nav'
 import Routes from './Routes'
 import Footer from '../components/template/Footer'
 
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default props =>
