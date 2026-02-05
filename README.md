@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="RVM" src="https://github.com/ravarmes/scv-frontend-react2/blob/master/public/assets/scv.png" />
+    <img alt="RVM" src="./assets/logo.jpg" />
 </h1>
 
 <h3 align="center">
@@ -9,7 +9,7 @@
 <p align="center">Exemplo de um Sistema para Gerenciamento de Locadora</p>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/ravarmes/scv-frontend-react2?color=%2304D361">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/ravarmes/scv-frontend-react?color=%2304D361">
 
   <a href="http://www.linkedin.com/in/rafael-vargas-mesquita">
     <img alt="Made by Rafael Vargas Mesquita" src="https://img.shields.io/badge/made%20by-Rafael%20Vargas%20Mesquita-%2304D361">
@@ -17,8 +17,8 @@
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-%2304D361">
 
-  <a href="https://github.com/ravarmes/scv-frontend-react2/stargazers">
-    <img alt="Stargazers" src="https://img.shields.io/github/stars/ravarmes/scv-frontend-react2?style=social">
+  <a href="https://github.com/ravarmes/scv-frontend-react/stargazers">
+    <img alt="Stargazers" src="https://img.shields.io/github/stars/ravarmes/scv-frontend-react?style=social">
   </a>
 </p>
 
@@ -33,14 +33,14 @@
 
 0. Instale o gerenciador de dependências [Node](https://nodejs.org/en/download/);
 1. Faça um clone desse repositório;
-2. Entre na pasta rodando `cd scv-frontend-react2`;
+2. Entre na pasta rodando `cd scv-frontend-react`;
 3. Rode `npm install` para instalar as dependências;
 4. Rode `npm start` para iniciar o servidor de desenvolvimento;
 5. Abra `http://localhost:3001` para ver o projeto no navegador.
 
 ## :clapper: Tela(s) <a name="-telas"/></a>
 
-![Tela Dashboard](https://github.com/ravarmes/scv-frontend-react2/blob/master/public/images/telas/tela1.png)
+![Tela Dashboard](./assets/tela1.png)
 
 ## :link: Links <a name="-links"/></a>
 
