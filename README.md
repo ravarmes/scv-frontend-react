@@ -1,5 +1,9 @@
 <h1 align="center">
+<<<<<<< HEAD
     <img alt="RVM" src="./assets/logo.jpg" />
+=======
+    <img alt="RVM" src="https://github.com/ravarmes/scv-frontend-react2/blob/main/public/assets/scv.png" />
+>>>>>>> b88614464f6eea6b6a6c7caffb2c3986d92c7b43
 </h1>
 
 <h3 align="center">
