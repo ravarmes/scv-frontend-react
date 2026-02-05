@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img alt="RVM" src="https://github.com/ravarmes/scv-frontend-react2/blob/master/public/assets/scv.png" />
+    <img alt="RVM" src="https://github.com/ravarmes/scv-frontend-react2/blob/main/public/assets/scv.png" />
 </h1>
 
 <h3 align="center">
