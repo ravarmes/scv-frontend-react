@@ -90,7 +90,7 @@ function App() {
         <div className="sidebar">
           <div className="user-profile">
             <div className="user-avatar">
-              <img src="/assets/scv.png" alt="SCV Logo" />
+              <img src={`${process.env.PUBLIC_URL}/assets/scv.png`} alt="SCV Logo" />
             </div>
             <div className="user-info">
               <span className="user-role">Sistema de Controle da Videolocadora</span>
