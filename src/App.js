@@ -24,6 +24,10 @@ import DevolucaoManager from './components/DevolucaoManager';
 import MultaManager from './components/MultaManager';
 import RelatorioEmprestimosCliente from './components/RelatorioEmprestimosCliente';
 import RelatorioEmprestimosBairro from './components/RelatorioEmprestimosBairro';
+import RelatorioEmprestimosClienteCompleto from './components/RelatorioEmprestimosClienteCompleto';
+import RelatorioTotaisClientes from './components/RelatorioTotaisClientes';
+import RelatorioEmprestimosFilme from './components/RelatorioEmprestimosFilme';
+import RelatorioTotaisAnoMes from './components/RelatorioTotaisAnoMes';
 import './App.css';
 
 function App() {
@@ -67,7 +71,11 @@ function App() {
       case 'reservas': return <ReservaManager />;
       // Relatórios
       case 'relatorio-emprestimos-cliente': return <RelatorioEmprestimosCliente />;
+      case 'relatorio-emprestimos-cliente-completo': return <RelatorioEmprestimosClienteCompleto />;
       case 'relatorio-emprestimos-bairro': return <RelatorioEmprestimosBairro />;
+      case 'relatorio-totais-clientes': return <RelatorioTotaisClientes />;
+      case 'relatorio-emprestimos-filme': return <RelatorioEmprestimosFilme />;
+      case 'relatorio-totais-ano-mes': return <RelatorioTotaisAnoMes />;
       default: return <Dashboard />;
     }
   };
@@ -184,10 +192,22 @@ function App() {
           {expandedMenus.relatorios && (
             <div className="submenu">
               <div className={`menu-item submenu-item ${currentPage === 'relatorio-emprestimos-cliente' ? 'active' : ''}`} onClick={() => handlePageChange('relatorio-emprestimos-cliente')}>
+                <FaFileAlt /> Empréstimos por Cliente (Período)
+              </div>
+              <div className={`menu-item submenu-item ${currentPage === 'relatorio-emprestimos-cliente-completo' ? 'active' : ''}`} onClick={() => handlePageChange('relatorio-emprestimos-cliente-completo')}>
                 <FaFileAlt /> Empréstimos por Cliente
+              </div>
+              <div className={`menu-item submenu-item ${currentPage === 'relatorio-totais-clientes' ? 'active' : ''}`} onClick={() => handlePageChange('relatorio-totais-clientes')}>
+                <FaFileAlt /> Totais por Cliente
               </div>
               <div className={`menu-item submenu-item ${currentPage === 'relatorio-emprestimos-bairro' ? 'active' : ''}`} onClick={() => handlePageChange('relatorio-emprestimos-bairro')}>
                 <FaFileAlt /> Empréstimos por Bairro
+              </div>
+              <div className={`menu-item submenu-item ${currentPage === 'relatorio-emprestimos-filme' ? 'active' : ''}`} onClick={() => handlePageChange('relatorio-emprestimos-filme')}>
+                <FaFileAlt /> Empréstimos por Filme
+              </div>
+              <div className={`menu-item submenu-item ${currentPage === 'relatorio-totais-ano-mes' ? 'active' : ''}`} onClick={() => handlePageChange('relatorio-totais-ano-mes')}>
+                <FaFileAlt /> Totais por Ano/Mês
               </div>
             </div>
           )}
