@@ -47,7 +47,9 @@ const RelatorioEmprestimosBairro = () => {
         return `${day}/${month}/${year}`;
     };
 
-    const maxQuantidade = Math.max(...dadosBairros.map(d => d.quantidade || d.total || 0), 1);
+    const getQuantidade = (item) => Number(item.quantidade || item.total || 0);
+    const maxQuantidade = Math.max(...dadosBairros.map(getQuantidade), 1);
+    const totalQuantidade = dadosBairros.reduce((sum, d) => sum + getQuantidade(d), 0);
 
     return (
         <div>
@@ -117,11 +119,11 @@ const RelatorioEmprestimosBairro = () => {
                                             <div
                                                 className="bairro-bar"
                                                 style={{
-                                                    width: `${((item.quantidade || item.total || 0) / maxQuantidade) * 100}%`,
+                                                    width: `${(getQuantidade(item) / maxQuantidade) * 100}%`,
                                                     backgroundColor: `hsl(${210 + index * 30}, 70%, 50%)`
                                                 }}
                                             >
-                                                <span className="bairro-value">{item.quantidade || item.total || 0}</span>
+                                                <span className="bairro-value">{getQuantidade(item)}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -139,12 +141,11 @@ const RelatorioEmprestimosBairro = () => {
                                 </thead>
                                 <tbody>
                                     {dadosBairros.map((item, index) => {
-                                        const total = dadosBairros.reduce((sum, d) => sum + (d.quantidade || d.total || 0), 0);
-                                        const percentual = total > 0 ? (((item.quantidade || item.total || 0) / total) * 100).toFixed(1) : 0;
+                                        const percentual = totalQuantidade > 0 ? ((getQuantidade(item) / totalQuantidade) * 100).toFixed(1) : 0;
                                         return (
                                             <tr key={index}>
                                                 <td>{item.bairro || item.nome || `Bairro ${index + 1}`}</td>
-                                                <td>{item.quantidade || item.total || 0}</td>
+                                                <td>{getQuantidade(item)}</td>
                                                 <td>{percentual}%</td>
                                             </tr>
                                         );
@@ -153,7 +154,7 @@ const RelatorioEmprestimosBairro = () => {
                                 <tfoot>
                                     <tr className="table-info">
                                         <td><strong>Total</strong></td>
-                                        <td><strong>{dadosBairros.reduce((sum, d) => sum + (d.quantidade || d.total || 0), 0)}</strong></td>
+                                        <td><strong>{totalQuantidade}</strong></td>
                                         <td><strong>100%</strong></td>
                                     </tr>
                                 </tfoot>

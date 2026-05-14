@@ -47,7 +47,7 @@ const RelatorioEmprestimosFilme = () => {
         return `${day}/${month}/${year}`;
     };
 
-    const getQuantidade = (item) => item.quantidade || item.total || 0;
+    const getQuantidade = (item) => Number(item.quantidade || item.total || 0);
     const getNome = (item, index) => item.filme || item.nome || item.titulo || `Filme ${index + 1}`;
 
     const maxQuantidade = Math.max(...dadosFilmes.map(getQuantidade), 1);

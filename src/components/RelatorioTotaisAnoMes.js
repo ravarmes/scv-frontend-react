@@ -39,7 +39,7 @@ const RelatorioTotaisAnoMes = () => {
 
     const getAno = (item) => item.ano || item.year || '';
     const getMes = (item) => item.mes || item.month || 0;
-    const getQuantidade = (item) => item.quantidade || item.qtd || 0;
+    const getQuantidade = (item) => Number(item.quantidade || item.qtd || 0);
     const getValorTotal = (item) => parseFloat(item.total || item.valorTotal || item.valor || 0);
 
     const formatMes = (mes) => {
