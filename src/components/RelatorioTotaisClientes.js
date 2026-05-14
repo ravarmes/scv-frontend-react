@@ -54,8 +54,8 @@ const RelatorioTotaisClientes = () => {
         }).format(value || 0);
     };
 
-    const getQuantidade = (item) => Number(item.quantidade || item.total || 0);
-    const getValorTotal = (item) => parseFloat(item.valorTotal || item.totalValor || item.valor || 0);
+    const getQuantidade = (item) => Number(item.quantidade || 0);
+    const getValorTotal = (item) => parseFloat(item.total || item.valorTotal || item.totalValor || item.valor || 0);
 
     const totalQuantidade = dadosClientes.reduce((sum, d) => sum + getQuantidade(d), 0);
     const totalValor = dadosClientes.reduce((sum, d) => sum + getValorTotal(d), 0);
